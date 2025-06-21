@@ -17,11 +17,11 @@ export const AppHeader = () => {
 			<div className="flex items-center justify-center gap-3 mb-4">
 				<Shield className="w-8 h-8 dark:text-white" />
 				<h1 className="text-4xl font-black uppercase tracking-wider dark:text-white">
-					NextAuth JWE Parser
+					NextAuth JWE session Parser
 				</h1>
 				<ThemeToggle />
 			</div>
-			<p className="text-lg font-bold uppercase tracking-wide text-gray-600 dark:text-gray-400">
+			<p className="font-bold uppercase tracking-wide text-gray-600 dark:text-gray-400">
 				🔒 All calculations performed locally in your browser
 			</p>
 		</header>

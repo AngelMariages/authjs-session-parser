@@ -1,5 +1,5 @@
 {
-	"name": "auth-js-parser",
+	"name": "authjs-session-parser",
 	"version": "1.0.0",
 	"description": "A Next.js project for parsing authentication tokens",
 	"author": {
@@ -8,11 +8,11 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/angelmariages/auth-js-parser.git"
+		"url": "git+https://github.com/angelmariages/authjs-session-parser.git"
 	},
-	"homepage": "https://github.com/angelmariages/auth-js-parser#readme",
+	"homepage": "https://github.com/angelmariages/authjs-session-parser#readme",
 	"bugs": {
-		"url": "https://github.com/angelmariages/auth-js-parser/issues"
+		"url": "https://github.com/angelmariages/authjs-session-parser/issues"
 	},
 	"license": "MIT",
 	"keywords": [
@@ -21,6 +21,8 @@
 		"jwt",
 		"parser",
 		"token",
+		"session",
+		"nextjs-auth",
 		"next-auth",
 		"auth-js",
 		"helper"
@@ -33,6 +35,7 @@
 		"start": "next start"
 	},
 	"dependencies": {
+		"@radix-ui/react-slot": "^1.2.3",
 		"autoprefixer": "^10.4.20",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
