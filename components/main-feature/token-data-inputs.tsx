@@ -29,8 +29,6 @@ export const TokenDataInputs = ({}) => {
 		}));
 
 		try {
-			console.log("Parsing session token:", appData.encryptedToken);
-			console.log("Using secret key:", appData.secret);
 			const parsed = await parseJWESession(
 				appData.encryptedToken,
 				appData.secret

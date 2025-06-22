@@ -1,6 +1,6 @@
 "use client";
 import { AlertTriangle, Code, CheckCircle, Copy } from "lucide-react";
-import { useState, JSX } from "react";
+import { useState, JSX, PropsWithChildren } from "react";
 import { Card } from "./ui/card";
 import { copyToClipboard } from "@/lib/clipboard";
 import { JWT_CLAIMS } from "@/lib/jwt-claims";
@@ -21,20 +21,18 @@ const getJWTClaimsTooltip = (key: string): string => {
 	return "";
 };
 
-const KeyTooltip = ({ claimKey }: { claimKey: string }) => {
+const KeyTooltip = ({ claimKey, children }: PropsWithChildren<{ claimKey: string }>) => {
 	const tooltip = getJWTClaimsTooltip(claimKey);
 
 	if (!tooltip) {
-		return null;
+		return children;
 	}
 
 	return (
 		<TooltipProvider>
 			<Tooltip>
 				<TooltipTrigger className="cursor-help">
-					<span className="text-blue-600 dark:text-blue-400 font-bold">
-						"{claimKey}"
-					</span>
+					{children}
 				</TooltipTrigger>
 				<TooltipContent className="max-w-xs">
 					<div className="font-semibold">{tooltip}</div>
@@ -61,10 +59,11 @@ const ValueRenderer = ({
 					{Object.entries(data).map(([key, value], index) => (
 						<div key={key} className="my-1">
 							<span className="relative group">
-								<span className="text-blue-600 dark:text-blue-400 font-bold cursor-help">
-									"{key}"
-								</span>
-								<KeyTooltip claimKey={key} />
+								<KeyTooltip claimKey={key}>
+									<span className="text-blue-600 dark:text-blue-400 font-bold">
+										"{key}"
+									</span>
+								</KeyTooltip>
 							</span>
 							<span className="text-gray-600 dark:text-gray-400">: </span>
 							<ValueRenderer data={value} dataName={key} />
