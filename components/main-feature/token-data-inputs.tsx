@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { useAtom } from "jotai";
 import { dataAtom } from "@/app/page";
 import { parseJWESession } from "@/lib/parse-authjs-jwe";
+import { useEffect } from "react";
 
 export const TokenDataInputs = ({}) => {
 	const [appData, setAppData] = useAtom(dataAtom);
@@ -50,6 +51,26 @@ export const TokenDataInputs = ({}) => {
 		}
 	};
 
+	const handleKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === "Enter" && !e.shiftKey) {
+			e.preventDefault();
+			handleParse();
+		}
+	};
+
+	useEffect(() => {
+		const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+			if (appData.encryptedToken || appData.secret) {
+				event.preventDefault();
+				event.returnValue = "";
+			}
+		};
+		window.addEventListener("beforeunload", handleBeforeUnload);
+		return () => {
+			window.removeEventListener("beforeunload", handleBeforeUnload);
+		};
+	}, [appData.encryptedToken, appData.secret]);
+
 	return (
 		<Card className="p-8 mb-8 bg-white dark:bg-gray-900 border-4 border-black dark:border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]">
 			<div className="grid gap-6">
@@ -70,6 +91,7 @@ export const TokenDataInputs = ({}) => {
 								encryptedToken: e.target.value,
 							}))
 						}
+						onKeyDown={handleKeyDown}
 						className="min-h-[120px] font-mono text-sm border-2 border-black dark:border-white rounded-none focus:ring-0 focus:border-black dark:focus:border-white resize-none bg-white dark:bg-gray-800 dark:text-white"
 					/>
 				</div>
@@ -88,6 +110,7 @@ export const TokenDataInputs = ({}) => {
 						onChange={(e) =>
 							setAppData((prev) => ({ ...prev, secret: e.target.value }))
 						}
+						onKeyDown={handleKeyDown}
 						className="min-h-[80px] font-mono text-sm border-2 border-black dark:border-white rounded-none focus:ring-0 focus:border-black dark:focus:border-white resize-none bg-white dark:bg-gray-800 dark:text-white"
 					/>
 				</div>
@@ -108,8 +131,10 @@ export const TokenDataInputs = ({}) => {
 							<Loader2 className="w-5 h-5 mr-2 animate-spin" />
 							Parsing...
 						</>
+					) : appData.result ? (
+						<>🔄 Refresh Parsing</>
 					) : (
-						"Parse Session"
+						<>Parse Session</>
 					)}
 				</Button>
 			</div>
