@@ -1,7 +1,7 @@
 "use client";
 import { ThemeToggleSkeleton } from "@/components/theme-toggle";
-import { Shield } from "lucide-react";
 import { Github } from "@/resources/icons/Github";
+import { Shield } from "lucide-react";
 import dynamic from "next/dynamic";
 
 const ThemeToggle = dynamic(

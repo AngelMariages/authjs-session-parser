@@ -23,6 +23,7 @@ export const ThemeToggle = () => {
 
 	return (
 		<Button
+			data-umami-event="theme-toggle-click"
 			onClick={toggleTheme}
 			variant="outline"
 			size="sm"

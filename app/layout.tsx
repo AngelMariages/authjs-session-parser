@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import Script from "next/script";
 
 export const metadata: Metadata = {
 	title: "NextAuth | AuthJS JWE Parser",
@@ -95,11 +96,12 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="light"
-					enableSystem
-				>
+				<Script
+					src="/stats.js"
+					strategy="afterInteractive"
+					data-website-id="60228a05-84f8-4dc2-9bcf-b680174ceb5d"
+				/>
+				<ThemeProvider attribute="class" defaultTheme="light" enableSystem>
 					{children}
 				</ThemeProvider>
 			</body>

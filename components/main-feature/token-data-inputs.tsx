@@ -122,6 +122,9 @@ export const TokenDataInputs = ({}) => {
 				)}
 
 				<Button
+					data-umami-event={
+						appData.result ? "refresh-parsing-click" : "parse-session-click"
+					}
 					onClick={handleParse}
 					disabled={appData.isLoading}
 					className="bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white font-black uppercase tracking-wider py-6 text-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none transition-all rounded-none"

@@ -9,6 +9,14 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  rewrites: async () => {
+    return [
+      {
+        source: '/stats.js',
+        destination: 'https://cloud.umami.is/script.js',
+      },
+    ];
+  },
 }
 
 export default nextConfig

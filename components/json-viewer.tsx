@@ -21,7 +21,10 @@ const getJWTClaimsTooltip = (key: string): string => {
 	return "";
 };
 
-const KeyTooltip = ({ claimKey, children }: PropsWithChildren<{ claimKey: string }>) => {
+const KeyTooltip = ({
+	claimKey,
+	children,
+}: PropsWithChildren<{ claimKey: string }>) => {
 	const tooltip = getJWTClaimsTooltip(claimKey);
 
 	if (!tooltip) {
@@ -30,16 +33,77 @@ const KeyTooltip = ({ claimKey, children }: PropsWithChildren<{ claimKey: string
 
 	return (
 		<TooltipProvider>
-			<Tooltip>
-				<TooltipTrigger className="cursor-help">
-					{children}
-				</TooltipTrigger>
+			<Tooltip
+				delayDuration={100}
+				onOpenChange={(open) => {
+					// @ts-expect-error umami is not defined in this context
+					open && window.umami?.track("key-tooltip-open");
+				}}
+			>
+				<TooltipTrigger className="cursor-help">{children}</TooltipTrigger>
 				<TooltipContent className="max-w-xs">
 					<div className="font-semibold">{tooltip}</div>
 				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>
 	);
+};
+
+const NumberValueRenderer = ({
+	data,
+	dataName,
+}: {
+	data: number;
+	dataName?: string;
+}): JSX.Element => {
+	// Check if it's a 10-digit timestamp
+	const isTimestamp = data.toString().length === 10 && data > 1000000000;
+	const isExpiredTimestamp =
+		dataName?.toLowerCase()?.includes("exp") &&
+		data < Math.floor(Date.now() / 1000);
+
+	if (isTimestamp) {
+		const { human, relative } = formatTimestamp(data);
+
+		return (
+			<TooltipProvider>
+				<Tooltip
+					delayDuration={100}
+					onOpenChange={(open) => {
+						// @ts-expect-error umami is not defined in this context
+						open && window.umami?.track("timestamp-tooltip-open");
+					}}
+				>
+					<TooltipTrigger className="cursor-help">
+						<span
+							className={cn(
+								"border-b-2 border-dotted",
+								isExpiredTimestamp
+									? "text-red-600 dark:text-red-400 border-red-400"
+									: "text-orange-600 dark:text-orange-400 border-orange-400"
+							)}
+						>
+							{data}
+							{isExpiredTimestamp && (
+								<AlertTriangle className="inline w-4 h-4 ml-1 text-red-500" />
+							)}
+						</span>
+					</TooltipTrigger>
+					<TooltipContent className="max-w-xs">
+						<div className="font-semibold">{human}</div>
+						<div className="text-gray-300 dark:text-gray-600">{relative}</div>
+						{isExpiredTimestamp && (
+							<div className="text-red-300 dark:text-red-600 font-bold">
+								⚠️ EXPIRED
+							</div>
+						)}
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
+		);
+	}
+
+	return <span className="text-purple-600 dark:text-purple-400">{data}</span>;
 };
 
 const ValueRenderer = ({
@@ -83,43 +147,7 @@ const ValueRenderer = ({
 	}
 
 	if (typeof data === "number") {
-		// Check if it's a 10-digit timestamp
-		const isTimestamp = data.toString().length === 10 && data > 1000000000;
-		const isExpiredTimestamp =
-			dataName?.toLowerCase()?.includes("exp") &&
-			data < Math.floor(Date.now() / 1000);
-
-		if (isTimestamp) {
-			const { human, relative } = formatTimestamp(data);
-			return (
-				<span className="relative group">
-					<span
-						className={cn(
-							"border-b-2 border-dotted cursor-help",
-							isExpiredTimestamp
-								? "text-red-600 dark:text-red-400 border-red-400"
-								: "text-orange-600 dark:text-orange-400 border-orange-400"
-						)}
-					>
-						{data}
-						{isExpiredTimestamp && (
-							<AlertTriangle className="inline w-4 h-4 ml-1 text-red-500" />
-						)}
-					</span>
-					<div className="absolute bottom-full left-0 mb-2 hidden group-hover:block bg-black dark:bg-white text-white dark:text-black text-xs rounded px-2 py-1 whitespace-nowrap z-10 shadow-lg">
-						<div className="font-semibold">{human}</div>
-						<div className="text-gray-300 dark:text-gray-600">{relative}</div>
-						{isExpiredTimestamp && (
-							<div className="text-red-300 dark:text-red-600 font-bold">
-								⚠️ EXPIRED
-							</div>
-						)}
-						<div className="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black dark:border-t-white"></div>
-					</div>
-				</span>
-			);
-		}
-		return <span className="text-purple-600 dark:text-purple-400">{data}</span>;
+		return <NumberValueRenderer data={data} dataName={dataName} />;
 	}
 
 	if (typeof data === "boolean") {
@@ -167,6 +195,7 @@ export function JsonViewer({ data, title }: { data: any; title: string }) {
 					)}
 				</div>
 				<Button
+					data-umami-event="copy-json-click"
 					onClick={handleCopy}
 					variant="outline"
 					size="sm"
