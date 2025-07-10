@@ -1,27 +1,51 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Script from "next/script";
 
-export const metadata: Metadata = {
-	title: "NextAuth | AuthJS JWE Parser",
+// Define the structured data as a separate component or variable for cleanliness
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: "AuthJS JWE Parser",
+	applicationCategory: "DeveloperApplication",
+	operatingSystem: "Any (Web)",
 	description:
-		"Parse and decrypt NextAuth.js | AuthJS JWE session tokens locally in your browser.",
+		"A browser-based utility to securely parse and decrypt NextAuth.js (AuthJS) JWE session tokens for debugging and development.",
+	url: "https://authjs-session-parser.mlegna.dev/",
+	creator: {
+		"@type": "Person",
+		name: "Àngel Mariages",
+		url: "https://github.com/angelmariages",
+	},
+};
+
+export const viewport: Viewport = {
+	width: "device-width",
+	height: "device-height",
+	initialScale: 1,
+	maximumScale: 1,
+	minimumScale: 1,
+	userScalable: false,
+	viewportFit: "cover",
+
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
+		{ media: "(prefers-color-scheme: dark)", color: "#000000" },
+	],
+};
+
+export const metadata: Metadata = {
+	title: "AuthJS JWE Parser - A NextAuth.js Utility",
+	description:
+		"Parse and decrypt NextAuth.js (AuthJS) JWE session tokens locally in your browser for easy debugging.",
 
 	openGraph: {
-		title: "NextAuth | AuthJS JWE Parser",
+		title: "AuthJS JWE Parser - A NextAuth.js Utility",
 		description:
-			"Parse and decrypt NextAuth.js | AuthJS JWE session tokens locally in your browser.",
-		url: "https://nextauth-jwe-parser.vercel.app",
+			"Parse and decrypt NextAuth.js (AuthJS) JWE session tokens locally in your browser for easy debugging.",
+		url: "https://authjs-session-parser.mlegna.dev/",
 		siteName: "NextAuth | AuthJS JWE Parser",
-		images: [
-			{
-				url: "https://authjs-jwe-parser.vercel.app/og-image.png",
-				width: 1200,
-				height: 630,
-				alt: "NextAuth | AuthJS JWE Parser",
-			},
-		],
 		type: "website",
 	},
 	twitter: {
@@ -29,38 +53,7 @@ export const metadata: Metadata = {
 		description:
 			"Parse and decrypt NextAuth.js | AuthJS JWE session tokens locally in your browser.",
 		card: "summary_large_image",
-		images: [
-			{
-				url: "https://nextauth-jwe-parser.vercel.app/og-image.png",
-				width: 1200,
-				height: 630,
-				alt: "NextAuth | AuthJS JWE Parser",
-			},
-		],
 	},
-	keywords: [
-		"NextAuth.js",
-		"JWE",
-		"JWT",
-		"JSON Web Encryption",
-		"Session Token",
-		"Local Parsing",
-		"Browser Encryption",
-		"Security",
-		"Privacy",
-		"Web Development",
-		"JavaScript",
-		"React",
-		"Next.js",
-		"Open Source",
-		"Frontend",
-		"Encryption",
-		"Decryption",
-		"Token Parsing",
-		"Web Security",
-		"Web Privacy",
-		"Web Applications",
-	],
 	robots: "index, follow",
 	icons: {
 		icon: "/favicon.ico",
@@ -71,20 +64,12 @@ export const metadata: Metadata = {
 		title: "NextAuth JWE Parser",
 		statusBarStyle: "black-translucent",
 	},
-	viewport: "width=device-width, initial-scale=1",
-	themeColor: [
-		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
-		{ media: "(prefers-color-scheme: dark)", color: "#000000" },
-	],
 	manifest: "/manifest.json",
-	applicationName: "NextAuth JWE Parser",
-	creator: "Àngel Mariages",
+	applicationName: "AuthJS JWE Parser",
 	authors: [
-		{
-			name: "Àngel Mariages",
-			url: "https://github.com/angelmariages",
-		},
+		{ name: "Àngel Mariages", url: "https://github.com/angelmariages" },
 	],
+	creator: "Àngel Mariages",
 	generator: "v0",
 };
 
@@ -96,6 +81,10 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+				/>
 				<Script
 					src="/stats.js"
 					strategy="afterInteractive"
