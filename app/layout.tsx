@@ -56,6 +56,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+	metadataBase: new URL('https://authjs-session-parser.mlegna.dev'),
 	title: "AuthJS JWE Parser - NextAuth.js Session Token Decoder & Debugger Tool",
 	description:
 		"Free online tool to parse, decrypt and debug NextAuth.js (AuthJS) JWE session tokens locally in your browser. Secure client-side JWT decryption for developers.",
