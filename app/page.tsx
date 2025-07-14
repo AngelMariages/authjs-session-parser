@@ -7,7 +7,7 @@ import Link from "next/link";
 import { BookOpen, Shield, Lock, Zap } from "lucide-react";
 import { atom } from "jotai";
 
-export const dataAtom = atom<{
+const dataAtom = atom<{
 	encryptedToken: string;
 	secret: string;
 	isLoading: boolean;
@@ -20,6 +20,8 @@ export const dataAtom = atom<{
 	result: null,
 	error: "",
 });
+
+export { dataAtom };
 
 const InfoSection = () => {
 	return (

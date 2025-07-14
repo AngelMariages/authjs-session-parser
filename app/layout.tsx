@@ -7,17 +7,37 @@ import Script from "next/script";
 const jsonLd = {
 	"@context": "https://schema.org",
 	"@type": "SoftwareApplication",
-	name: "AuthJS JWE Parser",
+	name: "AuthJS JWE Parser - NextAuth.js Session Token Decoder",
 	applicationCategory: "DeveloperApplication",
 	operatingSystem: "Any (Web)",
 	description:
-		"A browser-based utility to securely parse and decrypt NextAuth.js (AuthJS) JWE session tokens for debugging and development.",
+		"A secure browser-based utility to parse and decrypt NextAuth.js (AuthJS) JWE session tokens for debugging and development. Parse encrypted JWT tokens locally with complete client-side processing.",
 	url: "https://authjs-session-parser.mlegna.dev/",
+	keywords: ["NextAuth.js", "JWE", "JWT", "session parser", "authentication", "token decoder", "JavaScript", "encryption", "debugging tool"],
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "USD"
+	},
 	creator: {
 		"@type": "Person",
 		name: "Àngel Mariages",
 		url: "https://github.com/angelmariages",
 	},
+	sameAs: [
+		"https://github.com/angelmariages"
+	],
+	audience: {
+		"@type": "Audience",
+		audienceType: "Developers"
+	},
+	featureList: [
+		"Decrypt NextAuth.js JWE session tokens",
+		"Parse encrypted session payloads",
+		"100% client-side processing",
+		"No server requests required",
+		"Secure local token analysis"
+	]
 };
 
 export const viewport: Viewport = {
@@ -36,41 +56,56 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-	title: "AuthJS JWE Parser - A NextAuth.js Utility",
+	title: "AuthJS JWE Parser - NextAuth.js Session Token Decoder & Debugger Tool",
 	description:
-		"Parse and decrypt NextAuth.js (AuthJS) JWE session tokens locally in your browser for easy debugging.",
+		"Free online tool to parse, decrypt and debug NextAuth.js (AuthJS) JWE session tokens locally in your browser. Secure client-side JWT decryption for developers.",
 
 	openGraph: {
-		title: "AuthJS JWE Parser - A NextAuth.js Utility",
+		title: "AuthJS JWE Parser - NextAuth.js Session Token Decoder",
 		description:
-			"Parse and decrypt NextAuth.js (AuthJS) JWE session tokens locally in your browser for easy debugging.",
+			"Parse and decrypt NextAuth.js (AuthJS) JWE session tokens locally in your browser for easy debugging. Free developer tool with 100% client-side processing.",
 		url: "https://authjs-session-parser.mlegna.dev/",
-		siteName: "NextAuth | AuthJS JWE Parser",
+		siteName: "AuthJS JWE Parser",
 		type: "website",
+		images: [
+			{
+				url: "https://authjs-session-parser.mlegna.dev/opengraph-image",
+				width: 1200,
+				height: 630,
+				alt: "AuthJS JWE Parser - NextAuth.js Session Token Decoder"
+			}
+		]
 	},
 	twitter: {
-		title: "NextAuth | AuthJS JWE Parser",
+		title: "AuthJS JWE Parser - NextAuth.js Token Decoder",
 		description:
-			"Parse and decrypt NextAuth.js | AuthJS JWE session tokens locally in your browser.",
+			"Parse and decrypt NextAuth.js | AuthJS JWE session tokens locally in your browser. Free developer debugging tool.",
 		card: "summary_large_image",
+		images: ["https://authjs-session-parser.mlegna.dev/opengraph-image"]
 	},
 	robots: "index, follow",
+	keywords: ["NextAuth.js", "AuthJS", "JWE", "JWT", "session parser", "token decoder", "authentication", "debugging", "developer tools", "JavaScript", "encryption"],
 	icons: {
 		icon: "/favicon.ico",
 		shortcut: "/favicon.ico",
 		apple: "/apple-touch-icon.png",
 	},
 	appleWebApp: {
-		title: "NextAuth JWE Parser",
+		title: "AuthJS JWE Parser",
 		statusBarStyle: "black-translucent",
 	},
-	manifest: "/manifest.json",
+	manifest: "/manifest.webmanifest",
 	applicationName: "AuthJS JWE Parser",
 	authors: [
 		{ name: "Àngel Mariages", url: "https://github.com/angelmariages" },
 	],
 	creator: "Àngel Mariages",
-	generator: "v0",
+	generator: "Next.js",
+	category: "Developer Tools",
+	classification: "Web Application",
+	alternates: {
+		canonical: "https://authjs-session-parser.mlegna.dev/"
+	}
 };
 
 export default function RootLayout({
